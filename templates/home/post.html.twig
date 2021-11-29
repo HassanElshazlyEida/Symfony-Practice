@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    {{ form_start(user_form,{"id":"post_form"})}}
+        {{form(user_form)}}
+    {{ form_end(user_form)}}
+{% endblock %}

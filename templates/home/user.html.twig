@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Hello : {{user ?? "" }} {% endblock %}
+
+{% block body %}
+    {{ form_start(user_form)}}
+        {{form(user_form)}}
+    {{ form_end(user_form)}}
+{% endblock %}
