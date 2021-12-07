@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Form\PostType;
+use App\Repository\PostRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -60,14 +61,14 @@ class HomeController extends AbstractController
      * @Route("/post/{id?}",name="post")
      * @return Response
      */
-    public function post(Request $request,$id=null){
+    public function post(PostRepository $postRepository,Request $request,$id=null){
         // Or using Dependency injection
         // $em=$this->getDoctrine()->getManager();
         // $post=$em->getRepository(Post::class)->findOneBy([
         //     "id"=>$id
         // ]);
+        $posts=$postRepository->findByExampleField();
         $post=new Post();
-
         $form=$this->createForm(PostType::class,$post,[
             "action"=>$this->generateUrl("base.post"),
             "method"=>"POST"
@@ -79,7 +80,7 @@ class HomeController extends AbstractController
             $upload=$this->getParameter("uploads_dir");
             foreach($files as $file){
                 $file_name=md5(uniqid()).'.'. $file->guessExtension();
-                $file->move(
+                $file->move(    
                     $upload,$file_name
                 );
             }

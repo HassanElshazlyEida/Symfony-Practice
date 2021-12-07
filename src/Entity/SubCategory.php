@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\PostRepository;
+use App\Repository\SubCategoryRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=PostRepository::class)
+ * @ORM\Entity(repositoryClass=SubCategoryRepository::class)
  */
-class Post
+class SubCategory
 {
     /**
      * @ORM\Id
@@ -20,15 +20,11 @@ class Post
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $title;
+    private $name;
 
     /**
-     * @ORM\Column(type="text")
-     */
-    private $info;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category",inversedBy="post_id",fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="subCategories")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $category;
 
@@ -37,28 +33,16 @@ class Post
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getName(): ?string
     {
-        return $this->title;
+        return $this->name;
     }
 
-    public function setTitle(string $title): self
+    public function setName(string $name): self
     {
-        $this->title = $title;
+        $this->name = $name;
 
         return $this;
-    }
-
-    public function getInfo(): ?string
-    {
-        return $this->info;
-    }
-
-    public function setInfo(string $info): self
-    {
-        $this->info = $info;
-
-        return $this; 
     }
 
     public function getCategory(): ?Category
